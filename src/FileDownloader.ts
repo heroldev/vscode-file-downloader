@@ -99,6 +99,7 @@ export class FileDownloader implements IFileDownloader {
         const shouldUnzip = settings?.shouldUnzip ?? false;
         const makeExecutable = settings?.makeExecutable ?? false;
         const headers = settings?.headers;
+        const skipEncoding = settings?.skipEncoding ?? false
         let progress = 0;
         let progressTimerId: any;
         try {
@@ -115,7 +116,7 @@ export class FileDownloader implements IFileDownloader {
             }, 1500);
 
             const downloadStream: Readable = await this._requestHandler.get(
-                url.toString(),
+                url.toString(skipEncoding),
                 timeoutInMs,
                 retries,
                 retryDelayInMs,
